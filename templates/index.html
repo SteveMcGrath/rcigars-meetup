@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for location in locations %}
+	<div class="rss-entry">
+		<a href="/{{ location }}">
+			<img src="/static/images/{{ location }}.jpg" />
+			<span>{{ location|capitalize }}<span>
+		</a>
+	</div>
+{% endfor %}
+{% endblock %}

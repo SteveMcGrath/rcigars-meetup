@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for item in feed %}
+	<div class="rss-entry">
+		<a href="{{ item.link }}">
+		{% if 'media_thumbnail' in item.keys() %}
+			<img src="{{ item.media_thumbnail[0]['url'] }}" />
+		{% else %}
+			<img src="/static/images/reddit_cigars.jpg" />
+		{% endif %}
+			<span>{{ item.title }}<span>
+		</a>
+		<small>{{ item.published }}</small>
+	</div>
+{% endfor %}
+{% endblock %}
+{% block locations %}
+<ul>
+{% for location in locations %}
+	<li><a href="/{{ location }}">{{ location|capitalize }}</a></li>
+{% endfor %}
+<ul>
+{% endblock %}

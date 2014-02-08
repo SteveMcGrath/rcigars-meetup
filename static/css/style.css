@@ -1,0 +1,53 @@
+body {
+	background-image: url('/static/images/background.jpg');
+	background-color: #FFF;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-size:12px;
+	color: #CFB38F;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.rss-entry {
+	background-color: rgba(67, 34, 9, 0.9);
+	/* margin: 10px; */
+	border-radius: 3px;
+	min-height: 66px;
+	position: relative;
+	max-width: 615px;
+	margin: 10px auto;
+}
+
+.rss-entry img {
+	display: block;
+	max-height: 66px;
+	width: 70px;
+	position: absolute;
+	border-radius: 3px;
+	left: 0px;
+}
+
+.rss-entry span {
+	font-size: 18px;
+	position: absolute;
+	left: 80px;
+	top: 10px;
+}
+
+.rss-entry a {
+	text-decoration: none;
+	color: #CFB38F;
+}
+
+.rss-entry a:visited {
+	color: #CFB38F;
+}
+
+.rss-entry small {
+	display: block;
+	float: left;
+	position: absolute;
+	bottom: 2px;
+	left: 80px;
+}
