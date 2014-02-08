@@ -23,16 +23,8 @@ body {
 	display: block;
 	max-height: 66px;
 	width: 70px;
-	position: absolute;
 	border-radius: 3px;
-	left: 0px;
-}
-
-.rss-entry span {
-	font-size: 18px;
-	position: absolute;
-	left: 80px;
-	top: 10px;
+	float: left;
 }
 
 .rss-entry a {
@@ -44,10 +36,15 @@ body {
 	color: #CFB38F;
 }
 
-.rss-entry small {
+.rss-entry .wrapper {
 	display: block;
-	float: left;
-	position: absolute;
-	bottom: 2px;
-	left: 80px;
+}
+
+.rss-entry .wrapper h2 {
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.rss-entry .wrapper span {
+	
 }

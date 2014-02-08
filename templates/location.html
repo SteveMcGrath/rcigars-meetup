@@ -9,9 +9,11 @@
 		{% else %}
 			<img src="/static/images/reddit_cigars.jpg" />
 		{% endif %}
-			<span>{{ item.title }}<span>
+			<div class="wrapper">
+				<h2>{{ item.title }}</h2>
+				<span>{{ item.published }}</span>
+			</div>
 		</a>
-		<small>{{ item.published }}</small>
 	</div>
 {% endfor %}
 {% endblock %}
