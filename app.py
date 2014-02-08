@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 from urllib import urlencode
 from time import mktime
 from datetime import datetime
+from ConfigParser import ConfigParser
 import os
 import feedparser
 
@@ -80,4 +81,11 @@ def location_meetups(location):
 
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    config = ConfigParser()
+    config.read(os.path.join(path, 'app.conf'))
+    app.run(
+        port=config.get('Settings', 'port'),
+        host=config.get('Settings', 'host'),
+        server=config.get('Settings', 'app_server'),
+        reloader=config.getboolean('Settings', 'debug')
+    )
