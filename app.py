@@ -7,21 +7,8 @@ from ConfigParser import ConfigParser
 import os
 import feedparser
 
-# This is the base URL that will be used for all Reddit searches.  Location
-# specific criteria will be replaced with the {DATA} tag when needed.
-base_url = 'http://www.reddit.com/search.xml?'
-query = {
-    'q': 'subreddit:cigars {DATA} AND (title:herf OR title:meetup)',
-    'restrict_sr': 'off',
-    'sort': 'new',
-    't': 'all',
-}
-
-# Location-specific search criteria are entered here.
-locations = {
-    'chicago': '(title:chicago OR title:"casa de montecristo" OR title:tesa)',
-}
-
+# First we set a few parameters.  Mostly boilerplate stuff that we will use
+# throughout the app.
 path = os.path.dirname(os.path.abspath(__file__))
 env = Environment(
     lstrip_blocks=True,
@@ -30,10 +17,28 @@ env = Environment(
 )
 app = Bottle()
 
+# Lets go ahead and read in the configuration file...
+config = ConfigParser()
+config.read(os.path.join(path, 'app.conf'))
+base_url = config.get('RSS Feed', 'base_url')
+
+# Then we need to populate the RSS query information from the RSS Feed section
+# of the config file.
+query = {}
+for option in config.options('RSS Feed'):
+    if option is not 'base_url':
+        query[option] = config.get('RSS Feed', option)
+
+# Next we populate the location-specific information...
+locations = {}
+for section in config.sections():
+    if 'LOCATION: ' in section:
+        locations[section.split(': ')[1].lower()] = config.get(section, 'search')
+
 
 def get_entries(location):
     '''
-    Returns the subset fo the data that pertains to the location specified. 
+    Returns the subset of the data that pertains to the location specified. 
     Further it will only return recent items that have been created within
     the last 30 days.
     '''
@@ -81,8 +86,6 @@ def location_meetups(location):
 
 
 if __name__ == '__main__':
-    config = ConfigParser()
-    config.read(os.path.join(path, 'app.conf'))
     app.run(
         port=config.get('Settings', 'port'),
         host=config.get('Settings', 'host'),
