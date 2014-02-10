@@ -46,11 +46,14 @@ def get_entries(location):
     data = []
 
     # instantiate query and replace the {DATA} tag with the localized query.
-    q = query
-    q['q'] = q['q'].replace('{DATA}', locations[location])
+    q = query.copy()
+    q['q'] = q['q'].replace('{DATA}', config.get('LOCATION: %s' % location,
+                                                 'search'))
     # generate the rss_url
     rss_url = base_url + urlencode(q)
+    print rss_url
     for entry in feedparser.parse(rss_url).entries:
+        print entry.title
         # convert the timestamp into a datetime object then check to make sure
         # that the timestamp is no more than 30 days old before adding into the
         # feed.
@@ -73,19 +76,20 @@ def favicon():
 @app.get('/')
 def main_page():
     return env.get_template('index.html').render(
-        locations=locations
+        locations=[i.split(': ')[1] for i in config.sections() if 'LOCATION: ' in i]
     )
 
 
 @app.get('/<location>')
 def location_meetups(location):
     return env.get_template('location.html').render(
-        feed=get_entries(location.lower()),
+        feed=get_entries(location),
         locations=locations
     )
 
 
 if __name__ == '__main__':
+    print locations
     app.run(
         port=config.get('Settings', 'port'),
         host=config.get('Settings', 'host'),
