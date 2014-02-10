@@ -4,7 +4,7 @@
 {% for location in locations %}
 	<div class="rss-entry">
 		<a href="/{{ location }}">
-			<img src="/static/images/{{ location }}.jpg" />
+			<img src="/static/images/{{ location|lower }}.jpg" />
 			<div class="wrapper"><h2>{{ location|capitalize }}</h2></div>
 		</a>
 	</div>
